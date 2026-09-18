@@ -11,18 +11,22 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.section, .manifesto, .topic, .show').forEach((el) => observer.observe(el));
 
 const journey = [
-  {title:'O clique vira trabalho para o navegador',description:'O evento de entrada chega ao JavaScript. O navegador consulta a URL, verifica cache e inicia o pedido do documento e da logo.',wire:'click → fetch("https://netsecbr.com/logo-temp.jpg")',app:'URL + fetch',transport:'—',network:'—',link:'—'},
-  {title:'DNS encontra o endereço',description:'Cache local, resolvedor e servidores autoritativos participam se o nome ainda não estiver resolvido. A resposta entrega um endereço IP para o destino.',wire:'consulta A/AAAA netsecbr.com → endereço IP',app:'DNS',transport:'UDP/TCP 53 ou DoH',network:'IP do resolvedor',link:'quadro local'},
-  {title:'Socket e rota de saída',description:'O sistema escolhe IP de origem, interface e rota. Se o destino está fora da sub-rede, o próximo salto será o gateway padrão.',wire:'destino:443 → tabela de rotas → gateway',app:'HTTPS',transport:'porta efêmera → 443',network:'IP origem → destino',link:'próximo salto'},
-  {title:'TCP abre a conexão',description:'No exemplo com HTTP/2 sobre TCP, SYN, SYN-ACK e ACK sincronizam números de sequência. Perda de segmento pode provocar retransmissão.',wire:'SYN → SYN-ACK → ACK',app:'—',transport:'TCP handshake',network:'IP',link:'Ethernet/Wi‑Fi'},
-  {title:'TLS protege o conteúdo',description:'Cliente e servidor negociam parâmetros criptográficos, validam o certificado e estabelecem chaves. O conteúdo HTTP passa a viajar cifrado.',wire:'ClientHello → ServerHello → certificado → chaves',app:'TLS 1.3',transport:'TCP 443',network:'IP',link:'quadro local'},
-  {title:'HTTP pede a imagem',description:'O navegador envia um GET para a logo. Cabeçalhos como Host e Accept ajudam o servidor a entender qual recurso entregar.',wire:'GET /logo-temp.jpg  Host: netsecbr.com',app:'HTTP GET',transport:'fluxo TCP',network:'datagramas IP',link:'quadros'},
-  {title:'A pilha encapsula os bytes',description:'HTTP é cifrado por TLS; TCP adiciona portas e sequência; IP acrescenta origem, destino e TTL; Ethernet coloca MACs e verificação de quadro.',wire:'Ethernet [ IP [ TCP [ TLS [ HTTP ] ] ] ]',app:'HTTP + TLS',transport:'TCP / sequência',network:'IP / TTL',link:'MAC / FCS'},
-  {title:'ARP, rádio e switch: o primeiro salto',description:'Na LAN IPv4, ARP descobre o MAC do gateway se preciso; em IPv6, Neighbor Discovery faz papel semelhante. O switch encaminha pela tabela MAC.',wire:'ARP who-has gateway? → quadro ao MAC do gateway',app:'dados cifrados',transport:'TCP',network:'IP',link:'ARP / VLAN / MAC'},
-  {title:'Gateway, firewall e NAT',description:'O gateway reduz TTL e escolhe a próxima rota. Um firewall pode inspecionar a sessão; NAT pode trocar o IP e a porta de origem, registrando o mapeamento de retorno.',wire:'rota + política + NAT → novo próximo salto',app:'HTTPS cifrado',transport:'porta / estado',network:'rota / NAT',link:'novo quadro'},
-  {title:'A internet encaminha por saltos',description:'Cada roteador lê o IP de destino e consulta sua tabela. O quadro de enlace muda a cada enlace; o IP de destino permanece, salvo tradução ou túnel.',wire:'TTL 64 → 63 → 62 ... | L2 refeito por salto',app:'TLS cifrado',transport:'TCP',network:'IP / BGP',link:'enlace por salto'},
-  {title:'O servidor produz a resposta',description:'A pilha do servidor remove cabeçalhos, TLS decifra o pedido e a aplicação encontra o arquivo. HTTP responde com status, tipo e bytes da imagem.',wire:'HTTP/2 200 · Content-Type: image/jpeg · bytes',app:'HTTP 200 + TLS',transport:'TCP / ACK',network:'IP de retorno',link:'novo quadro'},
-  {title:'A volta termina na tela',description:'O retorno pode seguir outra rota. NAT desfaz o mapeamento, TCP ordena os segmentos, TLS decifra os dados e o navegador renderiza a logo.',wire:'quadros → IP → TCP → TLS → imagem exibida',app:'renderização',transport:'TCP reordena',network:'rota de volta',link:'último salto'}
+  {title:'O clique começa em casa',description:'Um clique no computador aciona o navegador. Ele verifica cache e prepara a busca da logo em netsecbr.com.',wire:'click → GET /logo-temp.jpg',app:'navegador / HTTP',transport:'—',network:'—',link:'—'},
+  {title:'DNS resolve o nome',description:'O sistema consulta o cache e, se necessário, um resolvedor DNS. A resposta fornece um endereço IP do destino, que pode ser de uma CDN próxima.',wire:'A/AAAA netsecbr.com → IP do destino',app:'DNS',transport:'UDP/TCP ou DoH',network:'IP do resolvedor',link:'rede local'},
+  {title:'O PC escolhe a saída',description:'A tabela de rotas indica a interface local e o gateway padrão. O sistema reserva uma porta de origem para conversar com a porta 443 do servidor.',wire:'IP local:porta efêmera → IP remoto:443',app:'HTTPS',transport:'porta de origem',network:'rota padrão',link:'próximo salto'},
+  {title:'TCP e TLS preparam o canal',description:'Neste exemplo com HTTP/2, TCP faz SYN, SYN-ACK e ACK. Depois, TLS valida o certificado e negocia chaves para cifrar os dados.',wire:'SYN → SYN-ACK → ACK → TLS handshake',app:'TLS 1.3',transport:'TCP 443',network:'IP',link:'Wi-Fi / Ethernet'},
+  {title:'O pedido é encapsulado',description:'O GET é protegido por TLS. TCP acrescenta portas e sequência; IP acrescenta endereços e TTL; o enlace acrescenta MACs e verificação de quadro.',wire:'L2 [ IP [ TCP [ TLS [ HTTP GET ] ] ] ]',app:'HTTP + TLS',transport:'TCP / sequência',network:'IP / TTL',link:'MAC / FCS'},
+  {title:'Wi-Fi ou switch encaminha o quadro',description:'O PC envia bits pelo rádio ou cabo. O ponto de acesso e o switch entregam o quadro na rede da casa, usando a VLAN e o MAC de destino locais.',wire:'PC → AP / switch → porta do firewall',app:'dados cifrados',transport:'TCP',network:'IP',link:'Wi-Fi / Ethernet'},
+  {title:'O firewall da casa inspeciona',description:'Se houver firewall no caminho, ele verifica política e estado da conexão. ARP em IPv4, ou Neighbor Discovery em IPv6, pode localizar o MAC do próximo salto.',wire:'allow? sessão criada → MAC do gateway',app:'HTTPS cifrado',transport:'estado TCP',network:'IP destino',link:'ARP / ND'},
+  {title:'Roteador doméstico faz NAT',description:'O CPE ou firewall escolhe a rota de saída. Em IPv4, NAT pode trocar endereço e porta privados pelos públicos, guardando a tradução para a volta.',wire:'192.168.x.x:porta → IP público:porta',app:'TLS cifrado',transport:'porta traduzida',network:'NAT / rota',link:'novo quadro'},
+  {title:'ONT ou modem entrega à operadora',description:'Na fibra, a ONT transforma sinais elétricos e ópticos; em outras tecnologias, o modem faz a adaptação do meio. O tráfego entra na rede de acesso.',wire:'CPE → ONT / modem → rede de acesso',app:'TLS cifrado',transport:'TCP',network:'IP',link:'fibra / cabo / rádio'},
+  {title:'A rede de acesso agrega clientes',description:'Equipamentos da operadora agregam várias assinaturas e encaminham o fluxo ao roteador de borda. A autenticação e o transporte dependem da arquitetura do provedor.',wire:'acesso → agregação → borda ISP',app:'TLS cifrado',transport:'TCP',network:'IP / MPLS ou túnel',link:'enlace ISP'},
+  {title:'CGNAT pode traduzir de novo',description:'Se a operadora usa CGNAT em IPv4, outra tradução compartilha um IP público entre clientes. Em IPv6, esse passo normalmente não é necessário.',wire:'IP compartilhado:porta → internet',app:'TLS cifrado',transport:'porta mapeada',network:'CGNAT opcional',link:'novo enlace'},
+  {title:'Core e backbone carregam o fluxo',description:'Roteadores centrais transportam o pacote pela infraestrutura de alta capacidade. O TTL cai a cada salto IP; o quadro de enlace é refeito em cada trecho.',wire:'core ISP → backbone | TTL n → n−1',app:'TLS cifrado',transport:'TCP',network:'IP / TTL',link:'fibra de longa distância'},
+  {title:'Peering conecta redes diferentes',description:'A operadora entrega o fluxo a outra rede por trânsito IP ou peering, às vezes em um ponto de troca de tráfego. BGP anuncia quais destinos cada rede alcança.',wire:'ASN da operadora → trânsito / PTT → ASN destino',app:'TLS cifrado',transport:'TCP',network:'BGP / próximo AS',link:'interconexão'},
+  {title:'O servidor responde',description:'O servidor ou nó CDN recebe o GET, remove encapsulamentos, processa o pedido e devolve os bytes JPEG com status HTTP 200.',wire:'HTTP 200 · Content-Type: image/jpeg',app:'HTTP 200',transport:'TCP / ACK',network:'IP de retorno',link:'rede do destino'},
+  {title:'O retorno cruza as redes',description:'Os segmentos voltam por redes intermediárias; a rota pode ser diferente da ida. Firewall e NAT reconhecem a sessão e desfazem os mapeamentos.',wire:'servidor → backbone → ISP → firewall → casa',app:'TLS cifrado',transport:'TCP / ACK',network:'rota de volta',link:'novo quadro por salto'},
+  {title:'A logo aparece na tela',description:'O PC recebe os segmentos, TCP os ordena, TLS decifra os bytes e o navegador decodifica a imagem. A logo da NetSec Village finalmente aparece.',wire:'quadros → IP → TCP → TLS → JPEG → tela',app:'renderização',transport:'TCP reordena',network:'IP local',link:'último salto'}
 ];
 const labSvg = document.querySelector('.lab-map svg');
 const labToggle = document.getElementById('lab-toggle');
@@ -32,39 +36,51 @@ let currentStep = 0;
 let playing = !reducedMotion;
 let elapsed = 0;
 let lastFrame = 0;
-const duration = 36000;
+const duration = journey.length * 3000;
+const route = document.getElementById('lab-route');
+const packet = document.getElementById('lab-packet');
+const positions = [0,.005,.015,.025,.035,.07,.13,.18,.23,.29,.34,.39,.45,.50,.70,.98];
+function positionPacket(progress) {
+  const phase = Math.min(journey.length - 1, Math.floor(progress * journey.length));
+  const fraction = progress * journey.length - phase;
+  const from = positions[phase];
+  const to = positions[Math.min(phase + 1, positions.length - 1)];
+  const point = route.getPointAtLength((from + (to - from) * fraction) * route.getTotalLength());
+  packet.setAttribute('cx', point.x); packet.setAttribute('cy', point.y);
+}
 function renderJourney(index) {
   currentStep = index;
   const step = journey[index];
-  document.getElementById('journey-count').textContent = `EVENTO ${String(index + 1).padStart(2,'0')} / 12`;
+  document.getElementById('journey-count').textContent = `EVENTO ${String(index + 1).padStart(2,'0')} / ${journey.length}`;
   document.getElementById('journey-title').textContent = step.title;
   document.getElementById('journey-description').textContent = step.description;
   document.getElementById('journey-wire').textContent = step.wire;
   for (const [key,id] of [['app','lab-app'],['transport','lab-transport'],['network','lab-network'],['link','lab-link']]) document.getElementById(id).textContent = step[key];
-  document.getElementById('lab-result').classList.toggle('is-visible', index === 11);
+  document.getElementById('lab-result').classList.toggle('is-visible', index === journey.length - 1);
 }
 function setPlaying(value) {
   playing = value;
   labToggle.textContent = value ? 'Pausar Ⅱ' : 'Continuar ▶';
   labToggle.setAttribute('aria-label', value ? 'Pausar animação' : 'Continuar animação');
   labState.textContent = value ? '● EM EXECUÇÃO' : 'Ⅱ PAUSADO';
-  if (value) labSvg.unpauseAnimations(); else labSvg.pauseAnimations();
   lastFrame = 0;
 }
 function frame(time) {
   if (playing) {
     if (lastFrame) elapsed = (elapsed + Math.min(time - lastFrame, 100)) % duration;
     lastFrame = time;
-    const index = Math.min(11, Math.floor(elapsed / 3000));
+    const index = Math.min(journey.length - 1, Math.floor(elapsed / 3000));
     if (index !== currentStep) renderJourney(index);
     document.getElementById('lab-progress').style.width = `${elapsed / duration * 100}%`;
+    positionPacket(elapsed / duration);
   }
   requestAnimationFrame(frame);
 }
 labToggle.addEventListener('click', () => setPlaying(!playing));
-document.getElementById('lab-restart').addEventListener('click', () => { elapsed = 0; labSvg.setCurrentTime(0); renderJourney(0); setPlaying(true); });
+document.getElementById('lab-restart').addEventListener('click', () => { elapsed = 0; positionPacket(0); renderJourney(0); setPlaying(true); });
 document.addEventListener('visibilitychange', () => { if (document.hidden && playing) setPlaying(false); });
 renderJourney(0);
+positionPacket(0);
 if (reducedMotion) setPlaying(false);
 requestAnimationFrame(frame);
 
