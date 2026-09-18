@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07121c">
+  <meta name="description" content="NetSec Village: uma comunidade vendor-agnostic para entender redes, seguir o caminho dos pacotes e proteger a infraestrutura que conecta tudo.">
+  <title>NetSec Village — Understand the packet. Secure the path.</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#conteudo">Ir para o conteúdo</a>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="#inicio" aria-label="NetSec Village, início"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>NETSEC<span class="brand-light"> VILLAGE</span></span></a>
+      <nav aria-label="Navegação principal"><a href="#sobre">Sobre</a><a href="#temas">Temas</a><a href="#quadros">Conteúdos</a><a href="#comunidade">Comunidade</a></nav>
+      <a class="nav-cta" href="#comunidade">Faça parte <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="hero-grid wrap">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="signal"></span> COMMUNITY / NETWORK SECURITY / VENDOR-AGNOSTIC</p>
+          <h1>Understand<br>the <em>packet.</em><br>Secure the <em>path.</em></h1>
+          <p class="hero-lead">Segurança de redes começa antes da regra de firewall. Começa entendendo por onde o pacote passa, o que muda no caminho e onde a comunicação pode falhar.</p>
+          <div class="hero-actions"><a class="button button-primary" href="#sobre">Conheça a Village <span aria-hidden="true">↗</span></a><a class="text-link" href="#temas">Explore os temas <span aria-hidden="true">↓</span></a></div>
+          <p class="hero-foot">Da camada 2 à arquitetura. Do primeiro SYN ao pacote de retorno.</p>
+        </div>
+        <div class="network-art" aria-label="Diagrama abstrato do caminho de um pacote, entre origem, switch, roteador, firewall e destino" role="img">
+          <div class="art-top"><span>PACKET PATH / 001</span><span class="live"><span class="signal"></span> LINK ACTIVE</span></div>
+          <svg viewBox="0 0 600 500" aria-hidden="true">
+            <defs><pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#21404c" stroke-width=".6"/></pattern><linearGradient id="route" x1="0" x2="1"><stop stop-color="#5de1ce"/><stop offset="1" stop-color="#c8ee76"/></linearGradient></defs>
+            <rect width="600" height="500" fill="url(#grid)" opacity=".7"/>
+            <path class="route-muted" d="M76 332 L188 332 L188 182 L310 182 L310 325 L430 325 L520 215"/>
+            <path class="route-line" d="M76 332 L188 332 L188 182 L310 182 L310 325 L430 325 L520 215"/>
+            <path class="branch" d="M188 332 L188 411 L317 411 M310 182 L430 182 L430 90"/>
+            <g class="node"><circle cx="76" cy="332" r="25"/><circle cx="76" cy="332" r="5"/></g><g class="node"><circle cx="188" cy="332" r="25"/><path d="M178 332h20m-10-10v20"/></g><g class="node"><circle cx="188" cy="182" r="25"/><path d="M178 182h20m-6-6 6 6-6 6"/></g><g class="node"><circle cx="310" cy="182" r="25"/><path d="M300 188v-12h20v12z"/></g><g class="node"><circle cx="310" cy="325" r="25"/><path d="M300 318h20m-20 7h20m-20 7h20"/></g><g class="node"><circle cx="430" cy="325" r="25"/><path d="M421 325h18m-9-9v18"/></g><g class="node destination"><circle cx="520" cy="215" r="31"/><circle cx="520" cy="215" r="9"/></g>
+            <circle class="packet" r="6"><animateMotion dur="7s" repeatCount="indefinite" path="M76 332 L188 332 L188 182 L310 182 L310 325 L430 325 L520 215"/></circle>
+            <text x="50" y="383">SOURCE</text><text x="154" y="382">SWITCH</text><text x="147" y="132">ROUTE</text><text x="277" y="132">POLICY</text><text x="282" y="374">NAT / VPN</text><text x="474" y="166">DESTINATION</text>
+          </svg>
+          <div class="art-bottom"><span>ARP → SWITCH → ROUTE → POLICY → RETURN</span><span>↗ 06 HOPS</span></div>
+        </div>
+      </div>
+      <div class="hero-strip"><div class="wrap strip-inner"><span>01 / OBSERVE O FLUXO</span><span>02 / ENTENDA O CONTEXTO</span><span>03 / PROTEJA O CAMINHO</span></div></div>
+    </section>
+
+    <section class="section intro" id="sobre"><div class="wrap intro-grid"><div><p class="section-kicker">01 / A VILLAGE</p><h2>O que é a<br><span>NetSec Village?</span></h2></div><div class="intro-body"><p class="large-copy">Um espaço para quem sabe que <strong>o firewall não é a rede.</strong></p><p>Somos uma comunidade dedicada à interseção entre redes e segurança. Falamos de routing, switching, segmentação, VPN, inspeção, arquitetura e troubleshooting com a mesma curiosidade: entender o caminho completo da comunicação.</p><p>Fabricantes e ferramentas fazem parte da prática. O conhecimento que fica é o fundamento. Por isso, a conversa aqui é <strong>vendor-agnostic</strong>, aberta a quem constrói, opera, investiga e protege redes.</p><a class="inline-link" href="#manifesto">Leia nosso manifesto <span aria-hidden="true">↗</span></a></div></div></section>
+
+    <section class="section topics" id="temas"><div class="wrap"><div class="section-heading"><div><p class="section-kicker">02 / CAMADAS DE CONHECIMENTO</p><h2>Da teoria ao<br><span>tráfego real.</span></h2></div><p>Não existe segurança de rede sem entender como a rede funciona. Explore os temas que conectam fundamentos, análise e arquitetura.</p></div><div class="topic-grid">
+      <article class="topic featured"><span class="topic-num">01</span><div class="topic-icon">⌁</div><h3>Network Fundamentals</h3><p>TCP/IP, DNS, ARP, VLANs e os conceitos que sustentam cada investigação.</p></article>
+      <article class="topic"><span class="topic-num">02</span><div class="topic-icon">↝</div><h3>Packet Walk</h3><p>Acompanhe o pacote do primeiro salto ao retorno.</p></article>
+      <article class="topic"><span class="topic-num">03</span><div class="topic-icon">▤</div><h3>Firewall</h3><p>Políticas, sessões, inspeção e o que acontece antes e depois delas.</p></article>
+      <article class="topic"><span class="topic-num">04</span><div class="topic-icon">◇</div><h3>VPN</h3><p>Túneis, criptografia e conectividade ponta a ponta.</p></article>
+      <article class="topic"><span class="topic-num">05</span><div class="topic-icon">⇢</div><h3>Routing</h3><p>Decisões de caminho, assimetria e alcance.</p></article>
+      <article class="topic"><span class="topic-num">06</span><div class="topic-icon">⤨</div><h3>Switching</h3><p>Domínios L2, segmentação e primeiro salto.</p></article>
+      <article class="topic"><span class="topic-num">07</span><div class="topic-icon">⌁</div><h3>PCAP</h3><p>Capturas que revelam o comportamento real do tráfego.</p></article>
+      <article class="topic"><span class="topic-num">08</span><div class="topic-icon">⊕</div><h3>Troubleshooting</h3><p>Hipóteses, evidências e diagnóstico sem achismo.</p></article>
+      <article class="topic"><span class="topic-num">09</span><div class="topic-icon">⬡</div><h3>Architecture</h3><p>Desenhos de rede que unem resiliência e proteção.</p></article>
+    </div></div></section>
+
+    <section class="section shows" id="quadros"><div class="wrap"><div class="section-heading"><div><p class="section-kicker">03 / EM PAUTA</p><h2>Conteúdo para<br><span>seguir o sinal.</span></h2></div><p>Quadros recorrentes para aprender, investigar e trocar experiências com a comunidade.</p></div><div class="show-grid"><article class="show"><span class="show-tag">FOUNDATIONS / 001</span><div class="show-symbol">01<span> / 06</span></div><h3>NetSec Fundamentals</h3><p>Os protocolos e conceitos que explicam o que acontece na rede.</p></article><article class="show"><span class="show-tag">PATH / 002</span><div class="show-symbol">↝</div><h3>Packet Walk</h3><p>Uma comunicação, salto a salto. Onde o pacote passa e o que muda?</p></article><article class="show"><span class="show-tag">ANALYSIS / 003</span><div class="show-symbol">⌁</div><h3>PCAP Challenge</h3><p>Uma captura, algumas pistas e uma pergunta: o que está acontecendo?</p></article><article class="show"><span class="show-tag">FIELD NOTES / 004</span><div class="show-symbol">?</div><h3>Troubleshooting</h3><p>Casos reais, hipóteses e a evidência que leva à causa.</p></article><article class="show"><span class="show-tag">SYSTEMS / 005</span><div class="show-symbol">▣</div><h3>Under the Hood</h3><p>Por dentro de sessões, NAT, políticas e protocolos.</p></article><article class="show"><span class="show-tag">DESIGN / 006</span><div class="show-symbol">⬡</div><h3>NetSec Architecture</h3><p>Segmentação, acesso e decisões de design explicadas na prática.</p></article></div></div></section>
+
+    <section class="manifesto" id="manifesto"><div class="wrap manifesto-grid"><div><p class="section-kicker">04 / POR QUE EXISTIMOS</p><h2>O caminho<br>também precisa<br><em>ser protegido.</em></h2></div><div class="manifesto-copy"><div class="quote-mark">“</div><p>Uma política pode permitir. O túnel pode estar UP. E, ainda assim, o tráfego não chegar.</p><p>Segurança de redes vive no encontro entre disponibilidade, protocolos, visibilidade e controle. Criamos a NetSec Village para dar espaço a essa conversa, compartilhar o que aprendemos no campo e aproximar quem quer ir além do appliance.</p><strong>Entenda o pacote. Proteja o caminho.</strong></div></div></section>
+
+    <section class="section community" id="comunidade"><div class="wrap community-grid"><div><p class="section-kicker">05 / CALL FOR COMMUNITY</p><h2>A próxima rota<br><span>é coletiva.</span></h2><p>Tem uma história de troubleshooting, uma captura curiosa, uma arquitetura para discutir ou vontade de ajudar a construir a Village? Esse espaço é seu.</p><div class="community-actions"><a class="button button-primary" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Instagram para encontrar a NetSec Village">Acompanhe no Instagram <span aria-hidden="true">↗</span></a><a class="button button-outline" href="mailto:netsecvillage@example.com?subject=Call%20for%20Community%20-%20NetSec%20Village">Call for Community <span aria-hidden="true">↗</span></a></div><p class="contact-note">Links provisórios: substitua pelo perfil e contato oficiais antes de divulgar.</p></div><div class="community-card"><span class="card-label">OPEN INVITATION / NETSEC VILLAGE</span><div class="card-orbit"><span>YOU</span><i></i><i></i><i></i><i></i></div><p>Profissionais de rede. Segurança. Estudantes. Pessoas curiosas.</p><strong>Se você quer entender o que acontece entre origem e destino, chegou ao lugar certo.</strong></div></div></section>
+  </main>
+  <footer class="footer"><div class="wrap footer-main"><div><a class="brand" href="#inicio"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>NETSEC<span class="brand-light"> VILLAGE</span></span></a><p>Understand the packet. Secure the path.</p></div><nav aria-label="Links do rodapé"><a href="#sobre">Sobre</a><a href="#temas">Temas</a><a href="#quadros">Conteúdos</a><a href="#comunidade">Comunidade</a></nav></div><div class="wrap footer-bottom"><span>© <span id="year">2026</span> NetSec Village</span><span>BUILT FOR THE PATH BETWEEN POINTS.</span><a href="#inicio">Voltar ao topo ↑</a></div></footer>
+  <script src="script.js" defer></script>
+</body>
+</html>
