@@ -51,6 +51,8 @@ function positionPacket(progress) {
 function renderJourney(index) {
   currentStep = index;
   const step = journey[index];
+  const station = ['pc','pc','pc','pc','pc','lan','firewall','firewall','ont','access','access','core','peering','server','return','return'][index];
+  document.querySelectorAll('[data-station]').forEach(item => item.classList.toggle('is-active', item.dataset.station === station));
   document.getElementById('journey-count').textContent = `EVENTO ${String(index + 1).padStart(2,'0')} / ${journey.length}`;
   document.getElementById('journey-title').textContent = step.title;
   document.getElementById('journey-description').textContent = step.description;
