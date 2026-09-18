@@ -39,13 +39,16 @@ let lastFrame = 0;
 const duration = journey.length * 3000;
 const route = document.getElementById('lab-route');
 const packet = document.getElementById('lab-packet');
-const positions = [0,.005,.015,.025,.035,.07,.13,.18,.23,.29,.34,.39,.45,.50,.70,.98];
+// Distances along the SVG route, aligned with the equipment markers above it.
+// The request reaches the server before the dot enters the lower return lane.
+const routeLength = route.getTotalLength();
+const positions = [0,0,0,0,0,45,113,227,330,440,495,555,673,870,870,routeLength,routeLength];
 function positionPacket(progress) {
   const phase = Math.min(journey.length - 1, Math.floor(progress * journey.length));
   const fraction = progress * journey.length - phase;
   const from = positions[phase];
-  const to = positions[Math.min(phase + 1, positions.length - 1)];
-  const point = route.getPointAtLength((from + (to - from) * fraction) * route.getTotalLength());
+  const to = positions[phase + 1];
+  const point = route.getPointAtLength(from + (to - from) * fraction);
   packet.setAttribute('cx', point.x); packet.setAttribute('cy', point.y);
 }
 function renderJourney(index) {
